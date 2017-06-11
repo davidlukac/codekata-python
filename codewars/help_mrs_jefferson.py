@@ -13,22 +13,20 @@ def shortest_arrang(n: int) -> List[int]:
     :return: list
         List of group sizes, -1 if no solution.
     """
-    def get_low_start(any_k: int) -> float:
-        fn = float(n)
-        fk = float(any_k)
-        return fn / fk - fk / 2 + 1 / 2
 
-    highest_k = int(floor(2 * sqrt(n)))
-    ks = (k for k in range(2, highest_k - 1)
-          if ((k % 2) == 0 and n % (k / 2) == 0)
-          or ((k % 2) > 0 and (n % k) == 0))
+    def get_low_start(any_dist: int, any_n: int) -> (int, bool):
+        r = any_n / any_dist - any_dist / 2 + 1 / 2
+        return int(r), r.is_integer()
 
-    for k in ks:
-        a = get_low_start(k)
-        if a.is_integer():
-            ia = int(a)
-            res = list(reversed(range(ia, ia + k)))
-            return res
+    highest_distance = int(floor(2 * sqrt(n)))
+    distances = (distance for distance in range(2, highest_distance - 1)
+                 if ((distance % 2) == 0 and n % (distance / 2) == 0)
+                 or ((distance % 2) > 0 and (n % distance) == 0))
+
+    for distance in distances:
+        low_start, start_is_int = get_low_start(distance, n)
+        if start_is_int:
+            return list(reversed(range(low_start, low_start + distance)))
 
     return [-1]
 
