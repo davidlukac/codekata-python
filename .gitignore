@@ -102,3 +102,6 @@ ENV/
 
 # Udemy resources
 /udemy-complete-python-bootcamp/Downloaded resources
+
+# IDEs
+.idea
